@@ -114,16 +114,21 @@ export default class BookList extends Component <BookListProps, BookListProps> {
                     style={{ textDecoration: 'none', color: 'black' }} key={book.id}>
                 <div className="booklist-book">
 
-                  <div className="booklist-book-thumbnail">
+                  {/* <div className="booklist-book-thumbnail">
                     {book.title.length > CHAR_LIMIT ?
                         book.title.substring(0, CHAR_LIMIT) + "..." : book.title}
+                  </div> */}
+                  <div className="booklist-book-thumbnail">
+                    {"booklist-book-thumbnail"}
                   </div>
-                  <div className="booklist-book-title">{book.title}</div>
+                  {/* <div className="booklist-book-title">{book.title}</div> */}
+                  <div className="booklist-book-title">{"booklist-book-title"}</div>
                   <div className="booklist-book-author">{book.author.fullName}</div>
                   <div className="booklist-book-shelf">{book.predefinedShelf.shelfName}</div>
                   <div className="booklist-book-genre">{book.bookGenre}</div>
                   <div className="booklist-book-rating">{book.rating}</div>
                 </div>
+                
               </Link>
           ))}
         </div>

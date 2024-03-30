@@ -33,6 +33,7 @@ interface IState {
     showShelfModal: boolean;
     showListView: boolean;
     bookList: Book[];
+    favoriteBooks: Book[];
     readBooks: Book[];
     didNotFinishBooks: Book[];
     toReadBooks: Book[];
@@ -48,6 +49,7 @@ class MyBooks extends Component<Record<string, unknown>, IState> {
             showShelfModal: false,
             showListView: false,
             bookList: [],
+            favoriteBooks: [],
             readBooks: [],
             didNotFinishBooks: [],
             toReadBooks: [],
@@ -57,6 +59,7 @@ class MyBooks extends Component<Record<string, unknown>, IState> {
         this.onAddShelf = this.onAddShelf.bind(this);
         this.onAddShelfModalClose = this.onAddShelfModalClose.bind(this);
         this.onToggleListView = this.onToggleListView.bind(this);
+        this.getFavoriteBooks = this.getFavoriteBooks.bind(this);
         this.getBooks = this.getBooks.bind(this);
         this.getDidNotFinishBooks = this.getDidNotFinishBooks.bind(this);
         this.toReadBooks = this.toReadBooks.bind(this);
@@ -71,6 +74,16 @@ class MyBooks extends Component<Record<string, unknown>, IState> {
         this.toReadBooks();
         this.readingBooks();
         this.trackCurrentDeviceSize();
+    }
+
+    getFavoriteBooks(): void {
+        HttpClient.get(Endpoints.favorites).then((favoriteBooks: Book[]) => {
+            this.setState(state => ({
+                favoriteBooks: Array.isArray(favoriteBooks) ? favoriteBooks : state.favoriteBooks
+            }));
+        }).catch((error: Record<string, string>) => {
+            console.error('error getting favorite books: ', error);
+        });
     }
 
     getReadBooks(): void {
@@ -185,11 +198,13 @@ class MyBooks extends Component<Record<string, unknown>, IState> {
                         ) :
                             <ShelfView
                                 key={[
+                                    ...this.state.favoriteBooks,
                                     ...this.state.readBooks,
                                     ...this.state.readingBooks,
                                     ...this.state.toReadBooks,
                                     ...this.state.didNotFinishBooks
                                 ].length + this.state.searchVal}
+                                favoriteBooks={this.state.favoriteBooks}
                                 readBooks={this.state.readBooks} 
                                 toReadBooks={this.state.toReadBooks}
                                 didNotFinishBooks={this.state.didNotFinishBooks}
