@@ -20,6 +20,7 @@ import { Book } from "../types/Book";
 import ShelfCarousel from "./ShelfCarousel";
 
 interface IShelfState {
+    favoriteBooks: Book[];
     readingBooks: Book[];
     toReadBooks: Book[];
     readBooks: Book[];
@@ -31,6 +32,7 @@ export default class ShelfView extends Component<IShelfState, IShelfState> {
     constructor(props: IShelfState) {
         super(props);
         this.state = {
+            favoriteBooks: props.favoriteBooks,
             didNotFinishBooks: props.didNotFinishBooks,
             readBooks: props.readBooks,
             readingBooks: props.readingBooks,
@@ -42,6 +44,10 @@ export default class ShelfView extends Component<IShelfState, IShelfState> {
     render(): ReactElement {
         return (
             <div>
+                <ShelfCarousel 
+                    title="Favorites"
+                    books={this.state.favoriteBooks}
+                    searchText={this.state.searchText} />
                 <ShelfCarousel 
                     title="Reading"
                     books={this.state.readingBooks}

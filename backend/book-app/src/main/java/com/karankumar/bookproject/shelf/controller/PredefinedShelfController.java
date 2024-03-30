@@ -17,6 +17,9 @@ package com.karankumar.bookproject.shelf.controller;
 import com.karankumar.bookproject.book.model.Book;
 import com.karankumar.bookproject.shelf.model.PredefinedShelf.ShelfName;
 import com.karankumar.bookproject.book.service.BookService;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +35,13 @@ public class PredefinedShelfController {
   @Autowired
   public PredefinedShelfController(BookService bookService) {
     this.bookService = bookService;
+  }
+
+  @GetMapping(path = "/favorites")
+  // TODO: only retrieve books that belong to the logged in user
+  public List<Book> getAllFavoriteBooks() {
+    // return bookService.findAllBooksByPredefinedShelfName(ShelfName.Favorties);
+    return Collections.emptyList();
   }
 
   @GetMapping(path = "/to-read")

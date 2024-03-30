@@ -17,7 +17,7 @@ If not, see <https://www.gnu.org/licenses/>.
 
 import React, { ReactElement } from 'react'
 import './ShelfCarousel.css'
-import { Icon, Paper } from '@material-ui/core';
+import { Icon, Paper, Button} from '@material-ui/core';
 import { Book } from '../types/Book';
 import { Component } from 'react';
 
@@ -25,11 +25,34 @@ function ShelfBook(props: BookProps): JSX.Element {
     const bookClass = 'book' + (props.img === "" ? '' : ' image');
     const displayTitle = props.title.length > 12 ? 
                         (props.title.substring(0, 12) + "...") : props.title;
+    const handleAddToFavorites = async () => {
+        console.log("Added to favorites:", props.title);
+        // TODO
+        // try {
+        //     const response = await fetch('/api/favorites', {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //         },
+        //         body: JSON.stringify({ title: props.title })
+        //     });
+        //     if (response.ok) {
+        //         console.log("Book added to favorites successfully.");
+        //     } else {
+        //         console.error("Failed to add book to favorites.");
+        //     }
+        // } catch (error) {
+        //     console.error("Error adding book to favorites:", error);
+        // }
+    };
 
     return (
         <Paper className={bookClass} variant="elevation" square={false}>
             {(bookClass !== "book") && <div className="book-spine"></div>}
             {displayTitle}
+            <Button onClick={handleAddToFavorites} size="small" variant="contained" color="primary">
+                Favorite
+            </Button>
         </Paper>
     )
 }
