@@ -20,6 +20,8 @@ import './ShelfCarousel.css'
 import { Icon, Paper, Button} from '@material-ui/core';
 import { Book } from '../types/Book';
 import { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { SHELF } from '../routes';
 
 function ShelfBook(props: BookProps): JSX.Element {
     const bookClass = 'book' + (props.img === "" ? '' : ' image');
@@ -106,7 +108,16 @@ export default class ShelfCarousel extends Component<ShelfCarouselProps, IShelfC
         return (
             <div className="shelf-container">
                 <span className="shelf-title">{this.state.title}</span>
-                <span className="view-all">View All</span>
+                <span className="view-all">
+                    <Link
+                        to={{
+                            pathname: SHELF,
+                            state: { books: this.state.books }
+                        }} 
+                        style={{ textDecoration: 'none' }}>
+                        View All
+                    </Link>
+                </span>
                 <div className="clear" />
                 <div className="books-and-shelf">
                     <div className="book-wrap">

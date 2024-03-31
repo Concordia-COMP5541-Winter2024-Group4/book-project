@@ -43,12 +43,14 @@ import {
     SETTINGS, 
     DELETE_ACCOUNT, 
     STATS,
-    SEARCH
+    SEARCH,
+    SHELF
 } from "./shared/routes"
 import {
     ApolloProvider,
 } from "@apollo/client";
 import { apolloClient } from './shared/http/HttpClient';
+import Shelf from "./shelf/Shelf";
 
 function App(): JSX.Element {
     const [theme, setTheme] = useState(lightTheme);
@@ -65,6 +67,7 @@ function App(): JSX.Element {
               <Route path={SIGN_UP} component={Register} />
               <Route path={BOOK_OVERVIEW + "/:id"} component={BookOverview} />
               <Route path={MY_BOOKS} component={MyBooks} />
+              <Route path={SHELF} component={Shelf} />
               <Route path={GOAL} component={Goal} />
               <Route path={SEARCH} component={Search} />
               <Route 

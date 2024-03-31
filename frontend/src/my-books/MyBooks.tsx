@@ -177,7 +177,7 @@ class MyBooks extends Component<Record<string, unknown>, IState> {
                     disableElevation
                 >
                     Add Book
-            </Button>
+                </Button>
                 <Button
                     onClick={this.onAddShelf}
                     variant="contained"
@@ -185,13 +185,13 @@ class MyBooks extends Component<Record<string, unknown>, IState> {
                     disableElevation
                 >
                     Add Shelf
-            </Button>
+                </Button>
             </div>}>
                 <NavBar />
                 <div>
                     {
                         this.state.showListView ? (
-                            <BookList 
+                            <BookList
                                 key={this.state.bookList.length + this.state.searchVal}
                                 bookListData={this.state.bookList}
                                 searchText={this.state.searchVal} />
@@ -205,10 +205,10 @@ class MyBooks extends Component<Record<string, unknown>, IState> {
                                     ...this.state.didNotFinishBooks
                                 ].length + this.state.searchVal}
                                 favoriteBooks={this.state.favoriteBooks}
-                                readBooks={this.state.readBooks} 
+                                readBooks={this.state.readBooks}
                                 toReadBooks={this.state.toReadBooks}
                                 didNotFinishBooks={this.state.didNotFinishBooks}
-                                readingBooks={this.state.readingBooks} 
+                                readingBooks={this.state.readingBooks}
                                 searchText={this.state.searchVal} />
                     }
                 </div>
