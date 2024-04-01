@@ -17,7 +17,7 @@ If not, see <https://www.gnu.org/licenses/>.
 
 export default class Endpoints {
   static readonly login: string = "login";
-  static readonly user: string = "api/user";
+  static readonly user: string = "/api/user";
   static readonly books: string = "api/books";
   static readonly booksGenres: string = "api/books/genres";
   static readonly shelf: string = "/api/shelf";

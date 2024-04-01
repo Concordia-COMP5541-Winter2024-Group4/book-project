@@ -18,14 +18,15 @@ import com.karankumar.bookproject.book.model.Book;
 import com.karankumar.bookproject.shelf.model.PredefinedShelf.ShelfName;
 import com.karankumar.bookproject.book.service.BookService;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping("/api/shelf/books")
 public class PredefinedShelfController {
@@ -40,31 +41,43 @@ public class PredefinedShelfController {
   @GetMapping(path = "/favorites")
   // TODO: only retrieve books that belong to the logged in user
   public List<Book> getAllFavoriteBooks() {
-    // return bookService.findAllBooksByPredefinedShelfName(ShelfName.Favorties);
-    return Collections.emptyList();
+    LOGGER.info("Retrieving all favorite books:" + ShelfName.Favorties);
+    List<Book> res = bookService.findAllBooksByPredefinedShelfName(ShelfName.Favorties);
+    LOGGER.info("Retrieved " + res.size() + " favorite books");
+    return res;
   }
 
   @GetMapping(path = "/to-read")
   // TODO: only retrieve books that belong to the logged in user
   public List<Book> getAllToReadBooks() {
-    return bookService.findAllBooksByPredefinedShelfName(ShelfName.TO_READ);
+    LOGGER.info("Retrieving all to-read books:" + ShelfName.TO_READ);
+    List<Book> res = bookService.findAllBooksByPredefinedShelfName(ShelfName.TO_READ);
+    LOGGER.info("Retrieved " + res.size() + " to-read books");
+    return res;
   }
 
   @GetMapping(path = "/reading")
   // TODO: only retrieve books that belong to the logged in user
   public List<Book> getAllReadingBooks() {
-    return bookService.findAllBooksByPredefinedShelfName(ShelfName.READING);
+    LOGGER.info("Retrieving all reading books:" + ShelfName.READING);
+    List<Book> res = bookService.findAllBooksByPredefinedShelfName(ShelfName.READING);
+    LOGGER.info("Retrieved " + res.size() + " reading books");
+    return res;
   }
 
   @GetMapping(path = "/read")
   // TODO: only retrieve books that belong to the logged in user
   public List<Book> getAllReadBooks() {
-    return bookService.findAllBooksByPredefinedShelfName(ShelfName.READ);
+    LOGGER.info("Retrieving all read books: " + ShelfName.READ);
+    List<Book> res = bookService.findAllBooksByPredefinedShelfName(ShelfName.READ);
+    LOGGER.info("Retrieved " + res.size() + " read books");
+    return res;
   }
 
   @GetMapping(path = "/did-not-finish")
   // TODO: only retrieve books that belong to the logged in user
   public List<Book> getAllDidNotFinishBooks() {
+    LOGGER.info("Retrieving all did-not-finish books:" + ShelfName.DID_NOT_FINISH);
     return bookService.findAllBooksByPredefinedShelfName(ShelfName.DID_NOT_FINISH);
   }
 }

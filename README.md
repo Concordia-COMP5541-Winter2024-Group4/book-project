@@ -31,11 +31,11 @@ Prerequisites:
 
 1. Clone the repository (if you're contributing, you'll need to first fork the repository and then clone your fork)
 1. Start Docker engine (Linux) or Docker desktop (macOS or Windows). 
-   - If you're using an Apple silicon chip (e.g. M1), you'll need to uncomment [this line](https://github.com/Project-Books/book-project/blob/0.2.0/backend/docker-compose.yml#L6). 
-1. In the root of the project, run `docker-compose build` to build the database, backend and frontend services
-1. Run `docker-compose --env-file .env up` to start the containers
-1. Once the development server has started (you'll get notified in the output of `docker-compose up`), go to `localhost:3000` in your web browser to access the frontend
-1. When finished, run `docker-compose down` to stop and remove the containers
+   - If you're using an Apple silicon chip (e.g. M1), you'll need to uncomment [this line](https://github.com/Project-Books/book-project/blob/0.2.0/backend/docker-compose.yml#L6). (Note: this instruction for Apple chips is probably outdated and can be ignored)
+2. In the root of the project, run `docker-compose build` to build the database, backend and frontend services
+3. Run `docker-compose --env-file .env up` to start the containers
+4. Once the development server has started (you'll get notified in the output of `docker-compose up`), go to `localhost:3000` in your web browser to access the frontend
+5. When finished, run `docker-compose down` to stop and remove the containers
 
 You may want to also want to run our [Books API](https://github.com/Project-Books/books-api) to avoid seeing an error on the search page on the frontend.
 

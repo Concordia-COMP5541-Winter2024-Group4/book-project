@@ -69,6 +69,7 @@ class MyBooks extends Component<Record<string, unknown>, IState> {
 
     componentDidMount(): void {
         this.getBooks();
+        this.getFavoriteBooks();
         this.getReadBooks();
         this.getDidNotFinishBooks();
         this.toReadBooks();
