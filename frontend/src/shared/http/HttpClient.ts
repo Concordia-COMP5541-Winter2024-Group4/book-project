@@ -87,6 +87,24 @@ class HttpClientBase {
             });
     }
 
+    patch(url: string, data: any): Promise<Response> {
+        if (this.headers["Authorization"] === null) {
+            window.location.replace("http://localhost:3000/sign-in");
+        }
+        const requestOptions = {
+            method: Verb.PATCH,
+            headers: this.headers,
+            body: JSON.stringify(data)
+        };
+        return fetch(url, requestOptions)
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw response;
+            });
+    }    
+
     getHeaders() {
         if (this.headers["Authorization"] === null) {
             window.location.replace("http://localhost:3000/sign-in");

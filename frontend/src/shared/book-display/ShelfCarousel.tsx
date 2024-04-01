@@ -22,30 +22,25 @@ import { Book } from '../types/Book';
 import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { SHELF } from '../routes';
+import HttpClient from '../http/HttpClient';
 
 function ShelfBook(props: BookProps): JSX.Element {
     const bookClass = 'book' + (props.img === "" ? '' : ' image');
-    const displayTitle = props.title.length > 12 ? 
-                        (props.title.substring(0, 12) + "...") : props.title;
+    const displayTitle = props.title.length > 30 ? 
+                        (props.title.substring(0, 30) + "...") : props.title;
     const handleAddToFavorites = async () => {
-        console.log("Added to favorites:", props.title);
-        // TODO
-        // try {
-        //     const response = await fetch('/api/favorites', {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //         },
-        //         body: JSON.stringify({ title: props.title })
-        //     });
-        //     if (response.ok) {
-        //         console.log("Book added to favorites successfully.");
-        //     } else {
-        //         console.error("Failed to add book to favorites.");
-        //     }
-        // } catch (error) {
-        //     console.error("Error adding book to favorites:", error);
-        // }
+        const response = await HttpClient.patch(
+            `/api/books/${props.id}`,
+            {
+                predefinedShelf: "Favorties",
+            }
+        );
+
+        if (response) {
+            console.log("Added to favorites:", props.title);
+        } else {
+            console.error("Failed to add to favorites:", props.title);
+        }
     };
 
     return (
@@ -60,6 +55,7 @@ function ShelfBook(props: BookProps): JSX.Element {
 }
 
 type BookProps = {
+    id: number;
     title: string;
     img: string;
 }
@@ -137,7 +133,7 @@ export default class ShelfCarousel extends Component<ShelfCarouselProps, IShelfC
         const elements = Array<ReactElement>();
         const maxBooksToDisplay = Math.min(books.length, 6)
         for (let i = 0; i < maxBooksToDisplay; i++) {
-            elements.push(<ShelfBook key={i} title={books[i].title} img={books[i].img} />)
+            elements.push(<ShelfBook key={i} id={books[i].id} title={books[i].title} img={books[i].img} />)
         }
         return elements;
     }

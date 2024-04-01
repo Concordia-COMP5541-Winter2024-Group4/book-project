@@ -63,7 +63,6 @@ import org.hibernate.validator.constraints.ISBN;
 @Getter
 @Setter
 @ToString(onlyExplicitlyIncluded = true)
-@JsonIgnoreProperties(value = {"id"})
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @NamedEntityGraph(
