@@ -99,9 +99,9 @@ export default class BookList extends Component <BookListProps, BookListProps> {
             <div className="booklist-book-author" onClick={()=> this.sortBy('author')}>
               Author{getSortingIcon('author', this.nameToOrder)}
             </div>
-            <div className="booklist-book-shelf" onClick={()=> this.sortBy('shelf')}>
+            {/* <div className="booklist-book-shelf" onClick={()=> this.sortBy('shelf')}>
               Shelf{getSortingIcon('shelf', this.nameToOrder)}
-            </div>
+            </div> */}
             <div className="booklist-book-genre" onClick={()=> this.sortBy('genre')}>
               Genre{getSortingIcon('genre', this.nameToOrder)}
             </div>
@@ -118,7 +118,7 @@ export default class BookList extends Component <BookListProps, BookListProps> {
                   </div>
                   <div className="booklist-book-title">{book.title}</div>
                   <div className="booklist-book-author">{book.author.fullName}</div>
-                  <div className="booklist-book-shelf">{book.predefinedShelf.shelfName}</div>
+                  {/* <div className="booklist-book-shelf">{book.predefinedShelf.shelfName}</div> */}
                   <div className="booklist-book-genre">{book.bookGenre}</div>
                   <div className="booklist-book-rating">{book.rating}</div>
                 </div>
