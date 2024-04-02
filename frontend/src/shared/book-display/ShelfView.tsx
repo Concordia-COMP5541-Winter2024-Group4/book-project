@@ -19,6 +19,16 @@ import React, { Component, ReactElement } from "react";
 import { Book } from "../types/Book";
 import ShelfCarousel from "./ShelfCarousel";
 
+interface ShelfViewProps {
+    favoriteBooks: Book[];
+    readingBooks: Book[];
+    toReadBooks: Book[];
+    readBooks: Book[];
+    didNotFinishBooks: Book[];
+    searchText: string;
+    refreshMyBooks: () => void;
+}
+
 interface IShelfState {
     favoriteBooks: Book[];
     readingBooks: Book[];
@@ -28,8 +38,8 @@ interface IShelfState {
     searchText: string;
 }
 
-export default class ShelfView extends Component<IShelfState, IShelfState> {
-    constructor(props: IShelfState) {
+export default class ShelfView extends Component<ShelfViewProps, IShelfState> {
+    constructor(props: ShelfViewProps) {
         super(props);
         this.state = {
             favoriteBooks: props.favoriteBooks,
@@ -39,7 +49,10 @@ export default class ShelfView extends Component<IShelfState, IShelfState> {
             toReadBooks: props.toReadBooks,
             searchText: props.searchText
         };
+        this.refreshMyBooks = props.refreshMyBooks;
     }
+
+    refreshMyBooks: () => void;
 
     render(): ReactElement {
         return (
@@ -47,23 +60,28 @@ export default class ShelfView extends Component<IShelfState, IShelfState> {
                 <ShelfCarousel 
                     title="Favorites"
                     books={this.state.favoriteBooks}
-                    searchText={this.state.searchText} />
+                    searchText={this.state.searchText}
+                    refreshMyBooks={this.refreshMyBooks} />
                 <ShelfCarousel 
                     title="Reading"
                     books={this.state.readingBooks}
-                    searchText={this.state.searchText} />
+                    searchText={this.state.searchText}
+                    refreshMyBooks={this.refreshMyBooks} />
                 <ShelfCarousel 
                     title="To Read" 
                     books={this.state.toReadBooks}
-                    searchText={this.state.searchText} />
+                    searchText={this.state.searchText}
+                    refreshMyBooks={this.refreshMyBooks} />
                 <ShelfCarousel 
                     title="Read"
                     books={this.state.readBooks}
-                    searchText={this.state.searchText} />
+                    searchText={this.state.searchText}
+                    refreshMyBooks={this.refreshMyBooks} />
                 <ShelfCarousel 
                     title="Did not finish"
                     books={this.state.didNotFinishBooks}
-                    searchText={this.state.searchText} />
+                    searchText={this.state.searchText}
+                    refreshMyBooks={this.refreshMyBooks} />
             </div>
         )
     }

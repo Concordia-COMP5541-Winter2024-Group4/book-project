@@ -38,6 +38,7 @@ function ShelfBook(props: BookProps): JSX.Element {
 
         if (response) {
             console.log("Added to favorites:", props.title);
+            props.refreshMyBooks();
         } else {
             console.error("Failed to add to favorites:", props.title);
         }
@@ -58,6 +59,7 @@ type BookProps = {
     id: number;
     title: string;
     img: string;
+    refreshMyBooks: () => void;
 }
 
 interface IShelfCarouselState {
@@ -81,8 +83,9 @@ export default class ShelfCarousel extends Component<ShelfCarouselProps, IShelfC
         this.state = {
             title: props.title,
             books: props.books,
-        }
-        this.searchText = props.searchText
+        };
+        this.refreshMyBooks = props.refreshMyBooks;
+        this.searchText = props.searchText;
     }
 
     componentDidMount(): void {
@@ -93,6 +96,7 @@ export default class ShelfCarousel extends Component<ShelfCarouselProps, IShelfC
         } 
     }
     searchText = '';
+    refreshMyBooks: () => void;
 
     filterBooks(): Book[] {
         return this.state.books.filter(book => {
@@ -133,7 +137,11 @@ export default class ShelfCarousel extends Component<ShelfCarouselProps, IShelfC
         const elements = Array<ReactElement>();
         const maxBooksToDisplay = Math.min(books.length, 6)
         for (let i = 0; i < maxBooksToDisplay; i++) {
-            elements.push(<ShelfBook key={i} id={books[i].id} title={books[i].title} img={books[i].img} />)
+            elements.push(<ShelfBook key={i}
+                                     id={books[i].id} 
+                                     title={books[i].title} 
+                                     img={books[i].img} 
+                                     refreshMyBooks={this.refreshMyBooks} />)
         }
         return elements;
     }
@@ -142,4 +150,5 @@ type ShelfCarouselProps = {
     title: string;
     books: Book[];
     searchText: string;
+    refreshMyBooks: () => void;
 }

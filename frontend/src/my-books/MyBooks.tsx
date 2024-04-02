@@ -68,13 +68,17 @@ class MyBooks extends Component<Record<string, unknown>, IState> {
     }
 
     componentDidMount(): void {
+        this.refreshMyBooks();
+        this.trackCurrentDeviceSize();
+    }
+
+    refreshMyBooks = () => {
         this.getBooks();
         this.getFavoriteBooks();
         this.getReadBooks();
         this.getDidNotFinishBooks();
         this.toReadBooks();
         this.readingBooks();
-        this.trackCurrentDeviceSize();
     }
 
     getFavoriteBooks(): void {
@@ -210,7 +214,8 @@ class MyBooks extends Component<Record<string, unknown>, IState> {
                                 toReadBooks={this.state.toReadBooks}
                                 didNotFinishBooks={this.state.didNotFinishBooks}
                                 readingBooks={this.state.readingBooks}
-                                searchText={this.state.searchVal} />
+                                searchText={this.state.searchVal} 
+                                refreshMyBooks={this.refreshMyBooks} />
                     }
                 </div>
                 <ShelfModal
