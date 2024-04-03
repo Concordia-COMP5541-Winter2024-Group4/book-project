@@ -48,9 +48,11 @@ function ShelfBook(props: BookProps): JSX.Element {
         <Paper className={bookClass} variant="elevation" square={false}>
             {(bookClass !== "book") && <div className="book-spine"></div>}
             {displayTitle}
-            <Button onClick={handleAddToFavorites} size="small" variant="contained" color="primary">
-                Favorite
-            </Button>
+            {props.showFavoriteButton && (
+                <Button onClick={handleAddToFavorites} size="small" variant="contained" color="primary">
+                    Favorite
+                </Button>
+            )}
         </Paper>
     )
 }
@@ -59,6 +61,7 @@ type BookProps = {
     id: number;
     title: string;
     img: string;
+    showFavoriteButton: boolean;
     refreshMyBooks: () => void;
 }
 
@@ -137,15 +140,20 @@ export default class ShelfCarousel extends Component<ShelfCarouselProps, IShelfC
         const elements = Array<ReactElement>();
         const maxBooksToDisplay = Math.min(books.length, 6)
         for (let i = 0; i < maxBooksToDisplay; i++) {
+
             elements.push(<ShelfBook key={i}
                                      id={books[i].id} 
                                      title={books[i].title} 
                                      img={books[i].img} 
+                                     showFavoriteButton={this.state.title !== "Favorites"}
                                      refreshMyBooks={this.refreshMyBooks} />)
         }
         return elements;
     }
 }
+
+
+
 type ShelfCarouselProps = {
     title: string;
     books: Book[];
