@@ -34,6 +34,7 @@ interface IState {
     showListView: boolean;
     bookList: Book[];
     favoriteBooks: Book[];
+    recommendedBooks: Book[];
     readBooks: Book[];
     didNotFinishBooks: Book[];
     toReadBooks: Book[];
@@ -50,6 +51,7 @@ class MyBooks extends Component<Record<string, unknown>, IState> {
             showListView: false,
             bookList: [],
             favoriteBooks: [],
+            recommendedBooks: [],
             readBooks: [],
             didNotFinishBooks: [],
             toReadBooks: [],
@@ -60,6 +62,7 @@ class MyBooks extends Component<Record<string, unknown>, IState> {
         this.onAddShelfModalClose = this.onAddShelfModalClose.bind(this);
         this.onToggleListView = this.onToggleListView.bind(this);
         this.getFavoriteBooks = this.getFavoriteBooks.bind(this);
+        this.getRecommendedBooks = this.getRecommendedBooks.bind(this);
         this.getBooks = this.getBooks.bind(this);
         this.getDidNotFinishBooks = this.getDidNotFinishBooks.bind(this);
         this.toReadBooks = this.toReadBooks.bind(this);
@@ -75,6 +78,7 @@ class MyBooks extends Component<Record<string, unknown>, IState> {
     refreshMyBooks = () => {
         this.getBooks();
         this.getFavoriteBooks();
+        this.getRecommendedBooks();
         this.getReadBooks();
         this.getDidNotFinishBooks();
         this.toReadBooks();
@@ -90,6 +94,31 @@ class MyBooks extends Component<Record<string, unknown>, IState> {
             console.error('error getting favorite books: ', error);
         });
     }
+
+
+    filterRecommendations(recommendedBooks: Book[]): Book[] {
+        const { favoriteBooks } = this.state;
+        const favoriteGenres = favoriteBooks.flatMap(book => book.bookGenre);
+        const filteredRecommendations = recommendedBooks.filter(book =>
+            !favoriteBooks.some(favorite => favorite.id === book.id) &&
+            book.bookGenre.some(genre => favoriteGenres.includes(genre))
+        );
+        return filteredRecommendations;
+    }
+
+    getRecommendedBooks(): void {
+        HttpClient.get(Endpoints.recommendations)
+            .then((recommendedBooks: Book[]) => {
+                const filteredRecommendations = this.filterRecommendations(recommendedBooks);
+                this.setState(state => ({
+                    recommendedBooks: Array.isArray(filteredRecommendations) ? filteredRecommendations : state.recommendedBooks
+                }));
+            })
+            .catch((error: Record<string, string>) => {
+                console.error('error getting recommended books: ', error);
+            });
+    }
+    
 
     getReadBooks(): void {
         HttpClient.get(Endpoints.read).then((readBooks: Book[]) => {
@@ -143,11 +172,13 @@ class MyBooks extends Component<Record<string, unknown>, IState> {
             });
     }
 
+
     onAddShelf(): void {
         this.setState({
             showShelfModal: true,
         });
     }
+
 
     trackCurrentDeviceSize(): void {
         window.onresize = (): void => {
@@ -204,12 +235,14 @@ class MyBooks extends Component<Record<string, unknown>, IState> {
                             <ShelfView
                                 key={[
                                     ...this.state.favoriteBooks,
+                                    ...this.state.recommendedBooks,
                                     ...this.state.readBooks,
                                     ...this.state.readingBooks,
                                     ...this.state.toReadBooks,
                                     ...this.state.didNotFinishBooks
                                 ].length + this.state.searchVal}
                                 favoriteBooks={this.state.favoriteBooks}
+                                recommendedBooks={this.state.recommendedBooks}
                                 readBooks={this.state.readBooks}
                                 toReadBooks={this.state.toReadBooks}
                                 didNotFinishBooks={this.state.didNotFinishBooks}

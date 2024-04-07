@@ -69,6 +69,7 @@ public class PredefinedShelf extends Shelf {
 
   public enum ShelfName {
     Favorties("Favorties"),
+    Recommendations("Recommendations"),
     TO_READ("To read"),
     READING("Reading"),
     READ("Read"),
