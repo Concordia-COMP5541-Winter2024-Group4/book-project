@@ -18,6 +18,7 @@ import com.karankumar.bookproject.book.model.Book;
 import com.karankumar.bookproject.shelf.model.PredefinedShelf.ShelfName;
 import com.karankumar.bookproject.book.service.BookService;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,6 +37,22 @@ public class PredefinedShelfController {
   @Autowired
   public PredefinedShelfController(BookService bookService) {
     this.bookService = bookService;
+  }
+
+  @GetMapping(path = "/recommendations")
+  // TODO: only retrieve books that belong to the logged in user
+  public List<Book> getAllRecommendedBooks() {
+    LOGGER.info("Retrieving all recommended books:" + ShelfName.Recommendations);
+    List<Book> res = bookService.findAllBooksByPredefinedShelfName(ShelfName.Recommendations);
+    List<Book> favoriteBooks = bookService.findAllBooksByPredefinedShelfName(ShelfName.Favorties);
+    List<Book> candidates = new ArrayList<>();
+        candidates.addAll(res);
+        candidates.addAll(getAllToReadBooks());
+        candidates.addAll(getAllReadingBooks());
+        candidates.addAll(getAllReadBooks());
+        candidates.addAll(getAllDidNotFinishBooks());
+    LOGGER.info("Retrieved " + candidates.size() + " recommended books");
+    return candidates;
   }
 
   @GetMapping(path = "/favorites")
@@ -78,6 +95,8 @@ public class PredefinedShelfController {
   // TODO: only retrieve books that belong to the logged in user
   public List<Book> getAllDidNotFinishBooks() {
     LOGGER.info("Retrieving all did-not-finish books:" + ShelfName.DID_NOT_FINISH);
-    return bookService.findAllBooksByPredefinedShelfName(ShelfName.DID_NOT_FINISH);
+    List<Book> res = bookService.findAllBooksByPredefinedShelfName(ShelfName.DID_NOT_FINISH);
+    LOGGER.info("Retrieved " + res.size() + " did not finish books");
+    return res;
   }
 }

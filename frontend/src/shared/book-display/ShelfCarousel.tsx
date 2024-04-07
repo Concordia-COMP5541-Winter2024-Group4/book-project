@@ -15,6 +15,8 @@ You should have received a copy of the GNU General Public License along with thi
 If not, see <https://www.gnu.org/licenses/>.
 */
 
+
+
 import React, { ReactElement } from 'react'
 import './ShelfCarousel.css'
 import { Icon, Paper, Button} from '@material-ui/core';
