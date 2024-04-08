@@ -14,23 +14,23 @@ PURPOSE.  See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License along with this program.
 If not, see <https://www.gnu.org/licenses/>.
 */
-
 import React, { Component, ReactElement } from "react";
 import { NavBar } from "../shared/navigation/NavBar";
 import Switch from "../settings/Switch";
-import Button from "@material-ui/core/Button";
 import ShelfModal from "./ShelfModal";
 import { Layout } from "../shared/components/Layout";
 import BookList from '../shared/book-display/BookList';
 import { Book } from '../shared/types/Book';
 import HttpClient from '../shared/http/HttpClient';
 import Endpoints from '../shared/api/endpoints';
-import "./MyBooks.css";
 import ShelfView from "../shared/book-display/ShelfView";
-
+import "./MyBooks.css";
+import BookModal from "./BookModal"; // Import BookModal component
+import Button from "@material-ui/core/Button"; // Import Button component
 
 interface IState {
     showShelfModal: boolean;
+    showbookmodal: boolean; // Change to showbookmodal
     showListView: boolean;
     bookList: Book[];
     favoriteBooks: Book[];
@@ -42,12 +42,12 @@ interface IState {
     searchVal: string;
 }
 
-
 class MyBooks extends Component<Record<string, unknown>, IState> {
     constructor(props: Record<string, unknown>) {
         super(props);
         this.state = {
             showShelfModal: false,
+            showbookmodal: false, // Change to showbookmodal
             showListView: false,
             bookList: [],
             favoriteBooks: [],
@@ -59,7 +59,9 @@ class MyBooks extends Component<Record<string, unknown>, IState> {
             searchVal: ''
         };
         this.onAddShelf = this.onAddShelf.bind(this);
+        this.onAddBook = this.onAddBook.bind(this); // Change to showbookmodal
         this.onAddShelfModalClose = this.onAddShelfModalClose.bind(this);
+        this.onAddBookModalClose = this.onAddBookModalClose.bind(this); // Change to showbookmodal
         this.onToggleListView = this.onToggleListView.bind(this);
         this.getFavoriteBooks = this.getFavoriteBooks.bind(this);
         this.getRecommendedBooks = this.getRecommendedBooks.bind(this);
@@ -69,6 +71,7 @@ class MyBooks extends Component<Record<string, unknown>, IState> {
         this.readingBooks = this.readingBooks.bind(this);
         this.getReadBooks = this.getReadBooks.bind(this);
     }
+
 
     componentDidMount(): void {
         this.refreshMyBooks();
@@ -179,6 +182,17 @@ class MyBooks extends Component<Record<string, unknown>, IState> {
         });
     }
 
+    onAddBook(): void {
+        this.setState({
+            showbookmodal: true, // Change to showbookmodal
+        });
+    }
+
+    onAddBookModalClose(): void {
+        this.setState({
+            showbookmodal: false, // Change to showbookmodal
+        });
+    }
 
     trackCurrentDeviceSize(): void {
         window.onresize = (): void => {
@@ -196,6 +210,8 @@ class MyBooks extends Component<Record<string, unknown>, IState> {
             showShelfModal: false,
         });
     }
+   
+ 
 
     onToggleListView(): void {
         this.setState({
@@ -211,6 +227,8 @@ class MyBooks extends Component<Record<string, unknown>, IState> {
                     className="tempButton"
                     color="primary"
                     disableElevation
+                    onClick={() => this.setState({ showbookmodal: true })} // Change to showbookmodal
+
                 >
                     Add Book
                 </Button>
@@ -255,6 +273,11 @@ class MyBooks extends Component<Record<string, unknown>, IState> {
                     open={this.state.showShelfModal}
                     onClose={this.onAddShelfModalClose}
                 />
+                <BookModal
+                   open={this.state.showbookmodal} // Pass showBookModal state to BookModal component
+                   onClose={this.onAddBookModalClose} // Pass onClose function to BookModal component
+               />
+
                 <div className="my-book-switch-container">
                     <div className="toggle-text">
                         Shelf View
