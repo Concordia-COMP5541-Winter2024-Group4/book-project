@@ -58,7 +58,7 @@ Using your favourite SQL client, use the following settings:
 - Password: `dbpassword`
 - Database name: `book_project_db`
 
-For example, in DataGrip or IntelliJ Ultimate:
+For example, in DataGrip or IntelliJ Ultimate or VSCODE:
 
 ![image](https://user-images.githubusercontent.com/11173328/153755219-051627c5-f052-4db9-a223-091acb4b2e76.png)
 
